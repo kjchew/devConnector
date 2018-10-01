@@ -4,12 +4,18 @@ const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 const dbURL = require('./config/keys').mongoURI;
+const bodyParser = require('body-parser');
 
 mongoose.connect(dbURL).then(
     () => console.log(`DB Connection Established on ${dbURL}`)
 ).catch(err => console.log(`Error in DB Connection: ${dbURL}, Error message: ${err}`));
 
 const app = express();
+
+
+//Initialize body-parser
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) =>
     res.send('Hello World'));
