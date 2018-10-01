@@ -7,7 +7,7 @@ const dbURL = require('./config/keys').mongoURI;
 
 mongoose.connect(dbURL).then(
     () => console.log(`DB Connection Established on ${dbURL}`)
-).catch(err => console.log(err));
+).catch(err => console.log(`Error in DB Connection: ${dbURL}, Error message: ${err}`));
 
 const app = express();
 
