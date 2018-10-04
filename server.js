@@ -5,6 +5,7 @@ const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
 const dbURL = require('./config/keys').mongoURI;
 const bodyParser = require('body-parser');
+const passport = require('passport');
 
 mongoose.connect(dbURL).then(
     () => console.log(`DB Connection Established on ${dbURL}`)
@@ -12,13 +13,15 @@ mongoose.connect(dbURL).then(
 
 const app = express();
 
+// Passport middleware
+app.use(passport.initialize());
+
+// Passport Config
+require('./config/passport')(passport);
 
 //Initialize body-parser
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
-app.get('/', (req, res) =>
-    res.send('Hello World'));
 
 app.use('/api/users', users);
 app.use('/api/profile', profile);
