@@ -14,10 +14,18 @@ const User = require('../../models/User');
 // @access  Public
 router.get('/test', (req, res) => res.json({msg: "Users works!"}))
 
+// const validateLoginInput = require('../../validation/login');
+
 // @route   GET /api/users/register
 // @desc    Register for Users
 // @access  Public
 router.post('/register', (req, res) => {
+    const validateRegisterInput = require('../../validation/register');
+    const {errors, isValid } = validateRegisterInput(req.body);
+
+    if (!isValid)
+      return res.status(400).json(errors);
+      
     User.findOne({email: req.body.email})
         .then(user => {
             if (user) {
