@@ -1,12 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
 const passport = require('passport');
+
+// Load Validation
+const validateProfileInput = require('../../validation/profile');
+// const validateExperienceInput = require('../../validation/experience');
+// const validateEducationInput = require('../../validation/education');
 
 // Load Profile Model
 const Profile = require('../../models/Profile');
 // Load User Model
 const User = require('../../models/User');
+// Load ProfileValidator
 
 // @route   GET /api/profile/test
 // @desc    Test for Profile
@@ -43,14 +48,11 @@ router.post(
     '/',
     passport.authenticate('jwt', { session: false }),
     (req, res) => {
-    //   const { errors, isValid } = validateProfileInput(req.body);
-  
-    //   // Check Validation
-    //   if (!isValid) {
-    //     // Return any errors with 400 status
-    //     return res.status(400).json(errors);
-    //   }
-  
+      
+      // Load Validation
+      const validateProfileInput = require('../../validation/profile');
+      const validateExperienceInput = require('../../validation/experience');
+      const validateEducationInput = require('../../validation/education');  
       // Get fields
       const profileFields = {};
       profileFields.user = req.user.id;
